@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Estudio · Curso 4 · A1</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a14; font-family:'DM Sans',sans-serif; color:#fff; padding-bottom:60px; }
+
+/* HEADER */
+.header { background:linear-gradient(135deg,#0f0f1e,#13132a); border-bottom:1px solid #1e1e3a; padding:20px 20px 14px; }
+.header h1 { font-size:22px; font-weight:900; font-family:'Bebas Neue',sans-serif; letter-spacing:2px; color:#fff; }
+.header p  { color:#555; font-size:12px; margin:3px 0 14px; }
+.mode-btns { display:flex; gap:8px; }
+.mode-btn  { padding:7px 20px; border-radius:20px; border:none; cursor:pointer; font-weight:700; font-size:13px; transition:all .2s; }
+.mode-btn.active  { background:#4ECDC4; color:#0a0a14; }
+.mode-btn.inactive{ background:#1e1e3a; color:#666; }
+
+/* TABS */
+.tabs { display:flex; overflow-x:auto; gap:8px; padding:14px 20px; scrollbar-width:none; }
+.tabs::-webkit-scrollbar { display:none; }
+.tab-btn { display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 14px;
+  border-radius:14px; border:2px solid #1e1e3a; background:#0f0f1e;
+  cursor:pointer; min-width:80px; transition:all .2s; }
+.tab-btn span.icon { font-size:22px; }
+.tab-btn span.lbl  { font-size:11px; font-weight:700; color:#666; text-align:center; }
+
+/* CONTENT */
+.content { padding:0 20px; }
+
+/* TOPIC HEADER */
+.topic-header { border-radius:14px; padding:14px 16px; margin-bottom:20px; }
+.topic-title-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.topic-icon { font-size:28px; }
+.topic-name { font-weight:900; font-size:18px; }
+.topic-label-sm { font-size:10px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.meaning-box { background:#0a0a14; border-radius:8px; padding:8px 12px; color:#FFD93D; font-size:13px; font-weight:600; }
+
+/* STRUCTURE BLOCK */
+.structure { margin-bottom:22px; }
+.struct-type { font-weight:800; font-size:13px; margin-bottom:6px; }
+.struct-formula { background:#ffffff0d; border-radius:8px; padding:6px 12px;
+  font-size:11px; font-family:monospace; color:#aaa; margin-bottom:8px; border:1px solid #ffffff11; }
+.row-grid { display:grid; grid-template-columns:1fr 1fr; border-radius:8px; overflow:hidden; border:1px solid #1e1e3a; margin-bottom:4px; }
+.row-en { padding:7px 12px; font-weight:600; font-size:12px; border-right:1px solid #1e1e3a; }
+.row-es { padding:7px 12px; color:#aaa; font-size:12px; }
+.row-even { background:#0d0d1e; }
+.row-odd  { background:#13132a; }
+
+/* QUIZ */
+.quiz-wrap { padding:16px 20px; }
+.quiz-info { background:#13132a; border:1px solid #252840; border-radius:12px; padding:12px 16px; margin-bottom:16px; }
+.quiz-info-title { color:#FFD93D; font-weight:800; font-size:13px; margin-bottom:4px; }
+.quiz-info-sub   { color:#aaa; font-size:12px; }
+.progress-bar { height:5px; background:#1e1e3a; border-radius:10px; overflow:hidden; margin-bottom:8px; }
+.progress-fill { height:100%; background:linear-gradient(90deg,#4ECDC4,#74B9FF); border-radius:10px; transition:width .3s; }
+.progress-labels { display:flex; justify-content:space-between; font-size:12px; margin-bottom:16px; }
+.hint-box { background:#13132a; border:1px solid #252840; border-radius:8px; padding:6px 12px; margin-bottom:10px; color:#FF9A3C; font-size:11px; font-weight:700; }
+.question-text { color:#fff; font-weight:700; font-size:17px; line-height:1.4; margin-bottom:16px; }
+textarea { width:100%; background:#0f0f1e; border:1.5px solid #333; border-radius:10px;
+  padding:12px; color:#fff; font-size:14px; resize:none; height:70px;
+  outline:none; font-family:inherit; transition:border .2s; }
+textarea:focus { border-color:#4ECDC4; }
+.feedback { border-radius:10px; border:1px solid; padding:10px 14px; margin:10px 0; font-size:13px; }
+.feedback.correct { background:#0d2b1f; border-color:#4ECDC444; color:#4ECDC4; }
+.feedback.wrong   { background:#2b0d0d; border-color:#FF6B6B44; }
+.feedback .correct-ans { color:#aaa; font-size:12px; margin-top:4px; }
+.btn-primary { width:100%; background:linear-gradient(135deg,#4ECDC4,#74B9FF);
+  color:#0a0a14; border:none; border-radius:12px; padding:13px;
+  font-size:15px; font-weight:900; cursor:pointer; margin-top:4px; font-family:inherit; }
+
+/* RESULTS */
+.result-header { text-align:center; margin-bottom:24px; padding:20px 0; }
+.result-emoji  { font-size:52px; }
+.result-title  { font-weight:900; font-size:22px; margin-top:8px; }
+.result-sub    { color:#aaa; margin-top:4px; font-size:14px; }
+.result-item   { border-radius:10px; padding:10px 14px; margin-bottom:8px; border:1px solid; }
+.result-item.ok   { background:#0d2b1f; border-color:#4ECDC444; }
+.result-item.fail { background:#2b0d0d; border-color:#FF6B6B44; }
+.result-q  { color:#aaa; font-size:11px; margin-bottom:4px; }
+.result-ur { font-size:12px; }
+.result-ca { color:#aaa; font-size:11px; margin-top:2px; }
+
+/* HIDDEN */
+.hidden { display:none !important; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📝 Guía de Estudio</h1>
+  <p>Curso 4 · A1 · Examen mañana · ¡Tú puedes! 💪</p>
+  <div class="mode-btns">
+    <button class="mode-btn active" onclick="setMode('guide')" id="btn-guide">📚 Guía</button>
+    <button class="mode-btn inactive" onclick="setMode('quiz')"  id="btn-quiz">✏️ Practicar</button>
+  </div>
+</div>
+
+<!-- GUIDE MODE -->
+<div id="guide-mode">
+  <div class="tabs" id="tabs"></div>
+  <div class="content" id="topic-content"></div>
+</div>
+
+<!-- QUIZ MODE -->
+<div id="quiz-mode" class="hidden">
+  <div class="quiz-wrap">
+    <div class="quiz-info">
+      <div class="quiz-info-title">✏️ Práctica de Examen</div>
+      <div class="quiz-info-sub">15 preguntas · todos los temas del Curso 4</div>
+    </div>
+    <div id="quiz-area"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────
+const topics = [
+  {
+    id:"going_to", icon:"🔮", label:"Going To", color:"#4ECDC4",
+    meaning:"Voy / vas / va a... — planes o intenciones futuras ya decididas",
+    structures:[
+      { type:"➕ Positivo", formula:"Sujeto + am/is/are + going to + verbo base",
+        rows:[["I am going to study.","Yo voy a estudiar."],["She is going to cook.","Ella va a cocinar."],["They are going to travel.","Ellos van a viajar."]] },
+      { type:"➖ Negativo", formula:"Sujeto + am/is/are + not + going to + verbo base",
+        rows:[["I am not going to eat.","Yo no voy a comer."],["He is not going to sing.","Él no va a cantar."],["We are not going to run.","Nosotros no vamos a correr."]] },
+      { type:"❓ Pregunta", formula:"Am/Is/Are + sujeto + going to + verbo base?",
+        rows:[["Are you going to study?","¿Vas a estudiar?"],["Is she going to cook?","¿Va a cocinar ella?"],["Are they going to travel?","¿Van a viajar ellos?"]] },
+      { type:"✅ Respuesta Corta", formula:"Yes/No + sujeto + am/is/are (not)",
+        rows:[["Yes, I am. / No, I'm not.","Sí. / No."],["Yes, she is. / No, she isn't.","Sí. / No."],["Yes, they are. / No, they aren't.","Sí. / No."]] },
+      { type:"🔍 WH Question", formula:"WH word + am/is/are + sujeto + going to + verbo?",
+        rows:[["What are you going to do?","¿Qué vas a hacer?"],["Where is he going to go?","¿A dónde va a ir él?"],["When are they going to arrive?","¿Cuándo van a llegar?"],["Who is she going to call?","¿A quién va a llamar?"]] },
+    ]
+  },
+  {
+    id:"gonna", icon:"💬", label:"Gonna", color:"#FF9A3C",
+    meaning:"Forma informal/coloquial de 'going to' — solo se usa al hablar, nunca al escribir formalmente",
+    structures:[
+      { type:"📌 Qué es", formula:"gonna = going to (solo conversacional)",
+        rows:[["I'm gonna study.","Voy a estudiar. (informal)"],["She's gonna cook.","Ella va a cocinar. (informal)"],["They're gonna travel.","Van a viajar. (informal)"]] },
+      { type:"⚠️ Cuándo NO usar", formula:"Nunca en exámenes escritos formales",
+        rows:[["✅ I am going to study. (examen)","Correcto en escrito"],["⚠️ I'm gonna study. (conversación)","Solo al hablar"],["❌ I gonna study.","INCORRECTO — siempre necesita am/is/are"]] },
+    ]
+  },
+  {
+    id:"was_were", icon:"⏪", label:"Was / Were", color:"#C77DFF",
+    meaning:"Era / fue / estaba / estuvo / tenía — TO BE en pasado",
+    structures:[
+      { type:"📌 Cuándo usar cada uno", formula:"I/He/She/It → WAS · You/We/They → WERE",
+        rows:[["I was tired.","Yo estaba cansado/a."],["She was happy.","Ella era/estaba feliz."],["He was born in Puebla.","Él nació en Puebla."],["They were students.","Ellos eran estudiantes."],["We were at home.","Nosotros estábamos en casa."],["It was cold.","Hacía frío."]] },
+      { type:"➖ Negativo", formula:"Sujeto + was/were + not",
+        rows:[["I was not / wasn't tired.","Yo no estaba cansado."],["She was not / wasn't there.","Ella no estaba ahí."],["They were not / weren't ready.","Ellos no estaban listos."]] },
+      { type:"❓ Pregunta", formula:"Was/Were + sujeto + ...?",
+        rows:[["Was she happy?","¿Estaba ella feliz?"],["Were they at school?","¿Estaban ellos en la escuela?"],["Was it cold yesterday?","¿Hacía frío ayer?"]] },
+      { type:"✅ Respuesta Corta", formula:"Yes/No + sujeto + was/were (not)",
+        rows:[["Yes, she was. / No, she wasn't.","Sí. / No."],["Yes, they were. / No, they weren't.","Sí. / No."]] },
+      { type:"🔍 WH Question", formula:"WH word + was/were + sujeto + ...?",
+        rows:[["Where were you yesterday?","¿Dónde estabas ayer?"],["Why was she sad?","¿Por qué estaba ella triste?"],["Who was at the party?","¿Quién estaba en la fiesta?"]] },
+    ]
+  },
+  {
+    id:"simple_past", icon:"📖", label:"Pasado Simple", color:"#FF6B6B",
+    meaning:"Acciones que ya terminaron en el pasado — ayer, la semana pasada, en 2020...",
+    structures:[
+      { type:"➕ Positivo — Verbos regulares", formula:"Sujeto + verbo + ed",
+        rows:[["I studied English.","Yo estudié inglés."],["She cooked dinner.","Ella cocinó la cena."],["They played soccer.","Ellos jugaron fútbol."],["He worked yesterday.","Él trabajó ayer."]] },
+      { type:"➕ Positivo — Verbos irregulares", formula:"Sujeto + verbo irregular (forma 2)",
+        rows:[["I went to school.","Yo fui a la escuela."],["She ate a taco.","Ella comió un taco."],["He spoke English.","Él habló inglés."],["They bought clothes.","Ellos compraron ropa."],["I had a dog.","Yo tenía un perro."]] },
+      { type:"➖ Negativo", formula:"Sujeto + did not (didn't) + verbo base",
+        rows:[["I did not study.","Yo no estudié."],["She didn't cook.","Ella no cocinó."],["They didn't play.","Ellos no jugaron."]] },
+      { type:"❓ Pregunta", formula:"Did + sujeto + verbo base?",
+        rows:[["Did you study?","¿Estudiaste?"],["Did she cook?","¿Cocinó ella?"],["Did they play soccer?","¿Jugaron fútbol?"]] },
+      { type:"✅ Respuesta Corta", formula:"Yes/No + sujeto + did (not)",
+        rows:[["Yes, I did. / No, I didn't.","Sí. / No."],["Yes, she did. / No, she didn't.","Sí. / No."]] },
+      { type:"🔍 WH Question", formula:"WH word + did + sujeto + verbo base?",
+        rows:[["What did you do yesterday?","¿Qué hiciste ayer?"],["Where did she go?","¿A dónde fue ella?"],["When did they arrive?","¿Cuándo llegaron?"],["Why did he leave?","¿Por qué se fue él?"]] },
+    ]
+  },
+  {
+    id:"colors", icon:"🎨", label:"Colores", color:"#FFD93D",
+    meaning:"Colors — se usan como adjetivos, van ANTES del sustantivo",
+    structures:[
+      { type:"📌 Colores básicos", formula:"Color + sustantivo (el color va ANTES en inglés)",
+        rows:[["red","rojo/a"],["blue","azul"],["green","verde"],["yellow","amarillo/a"],["orange","naranja"],["purple / violet","morado/violeta"],["pink","rosa"],["white","blanco/a"],["black","negro/a"],["gray / grey","gris"],["brown","café / marrón"],["beige","beige / crema"]] },
+      { type:"💬 Usándolos en oración", formula:"Sujeto + to be + color / color + sustantivo",
+        rows:[["My shirt is blue.","Mi camisa es azul."],["She has a red dress.","Ella tiene un vestido rojo."],["I am going to buy black pants.","Voy a comprar pantalones negros."],["What color is your jacket?","¿De qué color es tu chamarra?"],["It was a green shirt.","Era una camisa verde."]] },
+    ]
+  },
+  {
+    id:"clothes", icon:"👕", label:"Prendas", color:"#A8E6CF",
+    meaning:"Clothes / Clothing — lo que usamos. To wear = usar / llevar puesto",
+    structures:[
+      { type:"📌 Prendas básicas", formula:"to wear = usar / llevar puesto",
+        rows:[["shirt","camisa"],["t-shirt","playera / camiseta"],["pants / trousers","pantalones"],["shorts","shorts / pantalón corto"],["dress","vestido"],["skirt","falda"],["jacket / coat","chamarra / abrigo"],["shoes","zapatos"],["sneakers","tenis"],["boots","botas"],["socks","calcetines"],["hat","sombrero / gorra"],["scarf","bufanda"],["gloves","guantes"],["sweater","suéter"]] },
+      { type:"💬 Combinando con colores y tiempos", formula:"color + prenda + tiempo verbal",
+        rows:[["I am wearing a blue shirt.","Estoy usando una camisa azul."],["She was wearing black boots.","Ella llevaba botas negras."],["He is going to buy new shoes.","Él va a comprar zapatos nuevos."],["Did you wear your jacket?","¿Usaste tu chamarra?"],["What color are your sneakers?","¿De qué color son tus tenis?"],["I didn't wear a hat.","No usé sombrero."]] },
+    ]
+  },
+];
+
+const quizQuestions = [
+  { q:"¿Cómo se dice 'Yo voy a estudiar'?", a:"I am going to study.", hint:"going to · positivo" },
+  { q:"¿Cómo se dice 'Ella no va a cantar'?", a:"She is not going to sing.", hint:"going to · negativo" },
+  { q:"¿Cómo preguntas '¿Vas a correr?'", a:"Are you going to run?", hint:"going to · pregunta" },
+  { q:"¿Qué significa 'I was tired'?", a:"Yo estaba cansado/a.", hint:"was · significado" },
+  { q:"¿Cómo dices 'Ellos no estaban listos'?", a:"They were not ready.", hint:"were · negativo" },
+  { q:"¿Cómo preguntas '¿Estaba ella feliz?'", a:"Was she happy?", hint:"was · pregunta" },
+  { q:"¿Cómo se dice 'Yo estudié inglés'?", a:"I studied English.", hint:"pasado simple · regular" },
+  { q:"¿Cómo dices 'Ella no cocinó'?", a:"She didn't cook.", hint:"pasado simple · negativo" },
+  { q:"¿Cómo preguntas '¿Qué hiciste ayer?'", a:"What did you do yesterday?", hint:"pasado simple · WH" },
+  { q:"¿Cómo se dice 'Mi camisa es azul'?", a:"My shirt is blue.", hint:"colores" },
+  { q:"¿Qué significa 'She was wearing black boots'?", a:"Ella llevaba botas negras.", hint:"ropa + was" },
+  { q:"¿Cómo dices 'Voy a comprar pantalones negros'?", a:"I am going to buy black pants.", hint:"going to + ropa + color" },
+  { q:"'Gonna' es igual a...", a:"Going to (forma informal/coloquial)", hint:"gonna" },
+  { q:"¿Cuándo usas WAS y cuándo WERE?", a:"WAS → I/He/She/It · WERE → You/We/They", hint:"was/were · regla" },
+  { q:"¿Cómo se dice 'Él fue a la escuela'?", a:"He went to school.", hint:"pasado simple · irregular" },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────
+let currentTopic = 0;
+let quizIdx = 0, quizScore = 0, quizResults = [], quizChecked = false;
+
+// ── GUIDE ─────────────────────────────────────────────────────────────
+function renderTabs() {
+  const container = document.getElementById('tabs');
+  container.innerHTML = topics.map((t,i) => `
+    <button class="tab-btn" id="tab-${i}" onclick="selectTopic(${i})"
+      style="border-color:${i===currentTopic ? t.color : '#1e1e3a'};
+             background:${i===currentTopic ? t.color+'22' : '#0f0f1e'}">
+      <span class="icon">${t.icon}</span>
+      <span class="lbl" style="color:${i===currentTopic ? t.color : '#666'}">${t.label}</span>
+    </button>`).join('');
+}
+
+function renderTopic() {
+  const t = topics[currentTopic];
+  const structs = t.structures.map(s => `
+    <div class="structure">
+      <div class="struct-type" style="color:${t.color}">${s.type}</div>
+      <div class="struct-formula">${s.formula}</div>
+      ${s.rows.map((r,i) => `
+        <div class="row-grid ${i%2===0?'row-even':'row-odd'}">
+          <div class="row-en" style="color:${t.color}">${r[0]}</div>
+          <div class="row-es">${r[1]}</div>
+        </div>`).join('')}
+    </div>`).join('');
+
+  document.getElementById('topic-content').innerHTML = `
+    <div class="topic-header" style="background:${t.color}11;border:1.5px solid ${t.color}44">
+      <div class="topic-title-row">
+        <span class="topic-icon">${t.icon}</span>
+        <div>
+          <div class="topic-name" style="color:${t.color}">${t.label}</div>
+          <div class="topic-label-sm">Significado en español</div>
+        </div>
+      </div>
+      <div class="meaning-box">🇲🇽 ${t.meaning}</div>
+    </div>
+    ${structs}
+    <button class="btn-primary" onclick="setMode('quiz')">✏️ Practicar →</button>
+  `;
+}
+
+function selectTopic(i) {
+  currentTopic = i;
+  renderTabs();
+  renderTopic();
+}
+
+// ── QUIZ ──────────────────────────────────────────────────────────────
+function renderQuiz() {
+  const area = document.getElementById('quiz-area');
+  if (quizIdx >= quizQuestions.length) { renderResults(); return; }
+  const q = quizQuestions[quizIdx];
+  const pct = (quizIdx / quizQuestions.length) * 100;
+  area.innerHTML = `
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="progress-labels">
+      <span style="color:#666">Pregunta ${quizIdx+1} de ${quizQuestions.length}</span>
+      <span style="color:#4ECDC4;font-weight:700">${quizScore} correctas</span>
+    </div>
+    <div class="hint-box">💡 ${q.hint}</div>
+    <div class="question-text">${q.q}</div>
+    <textarea id="quiz-input" placeholder="Escribe tu respuesta..." ${quizChecked?'disabled':''}></textarea>
+    <div id="quiz-feedback"></div>
+    <button class="btn-primary" id="quiz-btn" onclick="quizAction()">${quizChecked ? (quizIdx+1>=quizQuestions.length?'Ver resultados →':'Siguiente →') : 'Verificar'}</button>
+  `;
+  if (quizChecked) document.getElementById('quiz-input').value = quizResults[quizResults.length-1]?.your || '';
+}
+
+function quizAction() {
+  if (!quizChecked) {
+    const val = document.getElementById('quiz-input').value.trim();
+    if (!val) return;
+    const q = quizQuestions[quizIdx];
+    const ok = val.toLowerCase().includes(q.a.split('/')[0].trim().toLowerCase().slice(0,10));
+    quizChecked = true;
+    quizResults.push({ q:q.q, your:val, correct:q.a, ok });
+    if (ok) quizScore++;
+    const fb = document.getElementById('quiz-feedback');
+    fb.innerHTML = ok
+      ? `<div class="feedback correct">✓ ¡Correcto!</div>`
+      : `<div class="feedback wrong"><span style="color:#FF6B6B">✗ Tu respuesta: <em>${val}</em></span><div class="correct-ans">✅ ${q.a}</div></div>`;
+    document.getElementById('quiz-input').disabled = true;
+    document.getElementById('quiz-btn').textContent = quizIdx+1>=quizQuestions.length ? 'Ver resultados →' : 'Siguiente →';
+  } else {
+    quizIdx++;
+    quizChecked = false;
+    renderQuiz();
+  }
+}
+
+function renderResults() {
+  const pct = Math.round((quizScore/quizQuestions.length)*100);
+  const msg = pct>=85 ? {e:'🏆',t:'¡Listo para el examen!',c:'#4ECDC4'}
+            : pct>=65 ? {e:'⭐',t:'¡Muy bien!',c:'#FFD93D'}
+            : {e:'📚',t:'Repasa un poco más',c:'#FF9A3C'};
+  const rows = quizResults.map(r => `
+    <div class="result-item ${r.ok?'ok':'fail'}">
+      <div class="result-q">${r.q}</div>
+      <div class="result-ur" style="color:${r.ok?'#4ECDC4':'#FF6B6B'}">${r.ok?'✓':'✗'} ${r.your}</div>
+      ${!r.ok?`<div class="result-ca">✅ ${r.correct}</div>`:''}
+    </div>`).join('');
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="result-header">
+      <div class="result-emoji">${msg.e}</div>
+      <div class="result-title" style="color:${msg.c}">${msg.t}</div>
+      <div class="result-sub">${quizScore} / ${quizQuestions.length} · ${pct}%</div>
+    </div>
+    ${rows}
+    <button class="btn-primary" onclick="resetQuiz()" style="margin-top:16px">🔄 Intentar de nuevo</button>
+  `;
+}
+
+function resetQuiz() {
+  quizIdx=0; quizScore=0; quizResults=[]; quizChecked=false;
+  renderQuiz();
+}
+
+// ── MODE SWITCH ───────────────────────────────────────────────────────
+function setMode(m) {
+  document.getElementById('guide-mode').classList.toggle('hidden', m!=='guide');
+  document.getElementById('quiz-mode').classList.toggle('hidden',  m!=='quiz');
+  document.getElementById('btn-guide').className = 'mode-btn '+(m==='guide'?'active':'inactive');
+  document.getElementById('btn-quiz').className  = 'mode-btn '+(m==='quiz' ?'active':'inactive');
+  if (m==='quiz') renderQuiz();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+renderTabs();
+renderTopic();
+</script>
+</body>
+</html>
